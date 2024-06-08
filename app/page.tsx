@@ -7,10 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { formInputs } from "@/global/types";
 import { Send } from "lucide-react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form"
 
 export default function Home() {
-
+  const [result, setResult] = useState("")
   const {
     register,
     handleSubmit,
@@ -18,16 +19,24 @@ export default function Home() {
     watch,
     formState: { errors },
   } = useForm<formInputs>()
-  const onSubmit: SubmitHandler<formInputs> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<formInputs> = (data) => {
+    const { description, context, source, relevance, youtubeLink, publicationDate } = data;
 
-  console.log(watch("publicationDate"));
+    const res = `Descrição: ${description}\nContexto: ${context}\nFonte: ${source}\nRelevância: ${relevance}\nLink do Youtube: ${youtubeLink}\nData de publicação: ${publicationDate} \n=================\n Ordem alfabética:\n`;
+
+    const allStrings = description + " " + context + " " + source + " " + relevance + " " + youtubeLink;
+    const allWords = allStrings.replace(/[0-9]/g, "").split(" ");
+    const orderedWords = allWords.sort();
+
+    setResult(res + orderedWords.join(" "));
+  };
 
   return (
    <div>
     <Header/>
     <main className="w-full py-5 px-[100px]">
       <h1 className="text-[30px] font-bold mb-20">Entenda o caso</h1>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col mb-5">
           <label className="text-[20px] mb-5">Data de publicação da notícia</label>
           <DatePicker setValue={setValue}/>
@@ -55,14 +64,15 @@ export default function Home() {
       <div className="flex flex-col mb-2">
           <label htmlFor="youtubeLink" className="text-[20px] mb-1">Deseja incluir um link para um vídeo do Youtube?</label>
           <Input id="youtubeLink" placeholder="Insira o Link completo ex: https://www.google.com/" className="focus-visible:ring-0 focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 min resize-none h-[50px]" 
+          pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$"
           required {...register("youtubeLink")}/>
       </div>
       <Button className="mb-5 bg-[#abffb3] font-bold text-black text-[18px] hover:bg-[#74c27c]">Gerar <Send className="ml-2"/></Button>
-      </form>
+      </form> 
       <hr />
       <div className="flex flex-col my-5">
           <label htmlFor="res" className="text-[30px] mb-1 font-bold">Saídas geradas</label>
-          <Textarea id="res" className="focus-visible:ring-0 focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 min resize-none h-[280px]" readOnly required/>
+          <Textarea id="res" className="focus-visible:ring-0 focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 min resize-none h-[280px]" readOnly required value={result}/>
       </div>
     </main>
    </div>
