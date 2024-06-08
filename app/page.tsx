@@ -16,11 +16,11 @@ export default function Home() {
     register,
     handleSubmit,
     setValue,
-    watch,
+    reset,
     formState: { errors },
   } = useForm<formInputs>()
   
-  const onSubmit: SubmitHandler<formInputs> = (data) => {
+  const onSubmit: SubmitHandler<formInputs> = async (data) => {
     const { description, context, source, relevance, youtubeLink, publicationDate } = data;
 
     const res = `Descrição: ${description}\nContexto: ${context}\nFonte: ${source}\nRelevância: ${relevance}\nLink do Youtube: ${youtubeLink}\nData de publicação: ${publicationDate} \n=================\n Ordem alfabética:\n`;
@@ -30,6 +30,16 @@ export default function Home() {
     const orderedWords = allWords.sort();
 
     setResult(res + orderedWords.join(" "));
+    fetch("/api/news", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    .then(res => console.log("News sent"))
+    .catch(error => console.log(error))
+    .finally(() => reset())
   };
 
   return (
