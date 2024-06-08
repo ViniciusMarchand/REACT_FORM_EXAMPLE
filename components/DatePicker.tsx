@@ -1,13 +1,20 @@
+'use client';
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "./ui/calendar";
+import { ptBR } from "date-fns/locale";
 
-export default function DatePicker() {
-    const [date, setDate] = useState<Date>();
+export default function DatePicker(props:{setValue:any}) {
+    const {setValue} = props;
+    const [date, setDate] = useState<any>(new Date());
+
+    useEffect(() => {
+        setValue("publicationDate", date);
+    },[date, setValue]);
     
     return (
         <Popover>
@@ -20,7 +27,7 @@ export default function DatePicker() {
             )}
         >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date ? format(date, "PPP") : <span>Insira a data da publicação da notícia</span>}
+            {date ? format(date, "PPP", {locale: ptBR}) : <span>Insira a data da publicação da notícia</span>}
         </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
@@ -29,6 +36,7 @@ export default function DatePicker() {
             selected={date}
             onSelect={setDate}
             initialFocus
+            locale={ptBR}
         />
         </PopoverContent>
     </Popover> 

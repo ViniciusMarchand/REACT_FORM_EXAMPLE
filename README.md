@@ -40,4 +40,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 <ul>
     <li>React Hook Form: Para facilitar a manipulação do formulário.</li>
+    <li>Shadcn: Para componentes mais bonitos.</li>
 </ul>
