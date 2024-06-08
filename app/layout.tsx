@@ -22,7 +22,7 @@ export default function RootLayout({
         <title>onze.news - IA</title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
       </head>
-      <body className={`${inter.className} w-screen h-screen bg-white`}>
+      <body className={`${inter.className} w-screen h-screen bg-white text-black overflow-x-hidden`}>
         {children}
       </body>
     </html>
