@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { formInputs } from "@/global/types";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Send } from "lucide-react";
+import { Copy, Send } from "lucide-react";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form"
 
@@ -89,6 +89,9 @@ export default function Home() {
       <hr />
       <div className="flex flex-col my-5">
           <label htmlFor="res" className="text-[30px] mb-1 font-bold">Saídas geradas</label>
+          <div className="relative top-10 right-4">
+            <Copy className="float-right cursor-pointer" onClick={(e) => navigator.clipboard.writeText(result)} />
+          </div>
           <Textarea id="res" className="focus-visible:ring-0 focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 min resize-none h-[280px]" readOnly required value={result}/>
       </div>
     </main>
