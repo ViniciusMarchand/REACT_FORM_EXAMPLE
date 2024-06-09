@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { formInputs } from "@/global/types";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { Send } from "lucide-react";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form"
@@ -18,7 +20,11 @@ export default function Home() {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<formInputs>()
+    
+  } = useForm<formInputs>({  
+    defaultValues: {
+    publicationDate: format(new Date(), "PPP", {locale: ptBR}),
+  }})
   
   const onSubmit: SubmitHandler<formInputs> = async (data) => {
     const { description, context, source, relevance, youtubeLink, publicationDate } = data;
