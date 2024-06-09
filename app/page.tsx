@@ -29,7 +29,8 @@ export default function Home() {
   const onSubmit: SubmitHandler<formInputs> = async (data) => {
     const { description, context, source, relevance, youtubeLink, publicationDate } = data;
 
-    const res = `Descrição: ${description}\nContexto: ${context}\nFonte: ${source}\nRelevância: ${relevance}\nLink do Youtube: ${youtubeLink}\nData de publicação: ${publicationDate} \n=================\n Ordem alfabética:\n`;
+
+    const res = `Descrição: ${description}\nContexto: ${context}\nFonte: ${source}\nRelevância: ${relevance}\nData de publicação: ${publicationDate} ${youtubeLink !== "" && `\nLink do Youtube: ${youtubeLink}`} \n=================\n Ordem alfabética:\n`;
 
     const allStrings = description + " " + context + " " + source + " " + relevance + " " + youtubeLink;
     const allWords = allStrings.replace(/[0-9]/g, "").split(" ");
@@ -82,7 +83,7 @@ export default function Home() {
           <label htmlFor="youtubeLink" className="text-[20px] mb-1">Deseja incluir um link para um vídeo do Youtube?</label>
           <Input id="youtubeLink" placeholder="Insira o Link completo ex: https://www.google.com/" className="focus-visible:ring-0 focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 min resize-none h-[50px]" 
           pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(?:-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$"
-          required {...register("youtubeLink")}/>
+          {...register("youtubeLink")}/>
       </div>
       <Button className="mb-5 bg-[#abffb3] font-bold text-black text-[18px] hover:bg-[#74c27c]">Gerar <Send className="ml-2"/></Button>
       </form> 
