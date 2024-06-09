@@ -1,3 +1,4 @@
+import { NextRequest } from "next/server";
 import { open } from "sqlite";
 import sqlite3 from "sqlite3";
 
@@ -40,3 +41,4 @@ export async function POST(req: Request, res: Response) {
     )
   );
 }
+
