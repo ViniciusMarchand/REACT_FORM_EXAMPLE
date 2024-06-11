@@ -29,12 +29,15 @@ export default function Home() {
   const onSubmit: SubmitHandler<formInputs> = async (data) => {
     const { description, context, source, relevance, youtubeLink, publicationDate } = data;
 
-
+    
     const res = `Descrição: ${description}\nContexto: ${context}\nFonte: ${source}\nRelevância: ${relevance}\nData de publicação: ${publicationDate} ${youtubeLink !== "" && `\nLink do Youtube: ${youtubeLink}`} \n=================\n Ordem alfabética:\n`;
 
-    const allStrings = description + " " + context + " " + source + " " + relevance + " " + youtubeLink;
+    const allStrings = (description + " " + context + " " + source + " " + relevance + " " + youtubeLink);
     const allWords = allStrings.replace(/[0-9]/g, "").split(" ");
-    const orderedWords = allWords.sort();
+    const orderedWords = allWords.sort(function (a, b) {
+      if(a.toLocaleLowerCase() < b.toLocaleLowerCase()) { return -1; }
+      return 1
+    });
 
     setResult(res + orderedWords.join(" "));
     fetch("/api/news", {
