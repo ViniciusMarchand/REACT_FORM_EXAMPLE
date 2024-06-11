@@ -1,7 +1,7 @@
 <h1>Como iniciar?</h1>
 <ol>
     <li>Digite no console npm install</li>
-    <li>Digite npm run dev</li>
+    <li>Digite no console npm run dev</li>
 </ol>
 
 <h1>Bibliotecas uitilizadas</h1>
